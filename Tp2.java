@@ -4,7 +4,7 @@
  * @author
  * @version 
  */
-//Test de push Cyril
+
 public class Tp2 {
 
     public static char lireOuiNon () {
@@ -72,8 +72,8 @@ public class Tp2 {
     
     public static int laSorte ( int carte ) {
         
-    /* ant�c�dent : 0 <= carte <= 51
-     * cons�quent : retourne la valeur de la carte (0, 1, ... 12)
+    /* antécédent : 0 <= carte <= 51
+     * conséquent : retourne la valeur de la carte (0, 1, ... 12)
      *              0 : as, 1 : 2, 2 : 3, ..., 9 : 10, 10 : valet, 11 : dame, 12 : roi
      */
     
@@ -83,8 +83,8 @@ public class Tp2 {
     
     public static int laCouleur ( int carte ) {
         
-    /* ant�c�dent : 0 <= carte <= 51
-     * cons�quent : retourne la couleur de la carte (0, 1, 2, 3)
+    /* antécédent : 0 <= carte <= 51
+     * conséquent : retourne la couleur de la carte (0, 1, 2, 3)
      *              0 : coeur, 1 : carreau, 2 : trefle, 3 : pique
      */
     
@@ -94,8 +94,8 @@ public class Tp2 {
     
     public static boolean estUnePaire ( int carte1, int carte2 ) { 
 
-    /* ant�c�dent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
-     * cons�quent : retourne vrai si carte1 et carte 2 constituent une paire,
+    /* antécédent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
+     * conséquent : retourne vrai si carte1 et carte 2 constituent une paire,
      *              faux sinon
      */
     
@@ -105,10 +105,10 @@ public class Tp2 {
 
     public static boolean sontMemeCouleur ( int carte1, int carte2 ) { 
 
-    /* ant�c�dent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
-     * cons�quent : retourne vrai si carte1 et carte 2 sont de la m�me
+    /* antécédent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
+     * conséquent : retourne vrai si carte1 et carte 2 sont de la même
      *              couleur.  Les 4 couleurs possibles sont : coeur, carreau,
-     *              tr�fle et pique.
+     *              trefle et pique.
      */
         
         return laCouleur ( carte1 ) == laCouleur ( carte2 );
@@ -117,11 +117,11 @@ public class Tp2 {
 
     public static boolean estUneSequence ( int carte1, int carte2 ) { 
 
-    /* ant�c�dent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
-     * cons�quent : retourne vrai si carte1 et carte 2 forment une s�quence,
-     *              peu importe leur couleur, faux sinon.  Une s�quence de
-     *              deux cartes sont deux cartes de valeur cons�cutive.  L'as
-     *              et le 2 sont consid�r�es comme cons�cutives ainsi que l'as
+    /* antécédent : 0 <= carte1 <= 51 et 0 <= carte2 <= 51
+     * conséquent : retourne vrai si carte1 et carte 2 forment une séquence,
+     *              peu importe leur couleur, faux sinon.  Une séquence de
+     *              deux cartes sont deux cartes de valeur consécutive.  L'as
+     *              et le 2 sont considérées comme consécutives ainsi que l'as
      *              et le roi.
      */
     
@@ -175,8 +175,8 @@ public class Tp2 {
     
     public static void afficherCarte ( int carte ) { 
 
-    /* ant�c�dent : 0 <= carte <= 51
-     * cons�quent : Affiche la carte selon sa couleur et sa valeur
+    /* antécédent : 0 <= carte <= 51
+     * conséquent : Affiche la carte selon sa couleur et sa valeur
      */
     
         System.out.print ( chaineSorte ( carte ) + " " + chaineCouleur ( carte ) );
