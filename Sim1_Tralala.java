@@ -1,5 +1,4 @@
 package Sim1;
-
 /**
  * 
  * 
@@ -7,7 +6,7 @@ package Sim1;
  * @version 
  */
 
-public class Tp2 {
+public class Sim1_Tralala {
 
     public static char lireOuiNon () {
         
@@ -46,11 +45,11 @@ public class Tp2 {
     
         int reponse;
         
-        System.out.print ( "Entrez le montant dont vous disposez : " );
+        System.out.print ( "Entrez le montant dont vous disposez (Il faut minimum 6$ pour jouer) : " );
         reponse = Clavier.lireInt();
         
-        while ( reponse <= 0 ) {
-            System.out.print ( "*** Le montant doit etre superieur a 0 : " );
+        while ( reponse < 6 ) {
+            System.out.print ( "*** Le montant doit etre superieur ou égal a 6 : " );
             reponse = Clavier.lireInt();
         }
         
@@ -61,11 +60,12 @@ public class Tp2 {
     
         int reponse;
         
-        System.out.print ( "Entrez le montant de la mise ( maximum : " + max + ", il y a un cout de 3$ par mise ) : " );
+        System.out.println(" Il y a un cout de 3$ par pige obligatoire! ");
+        System.out.print ( "Entrez le montant de la mise ( minimum: 3$, maximum : " + max + ") : " );
         reponse = Clavier.lireInt();
         
-        while ( reponse < 0 || reponse > max ) {
-            System.out.print ( "*** Le montant doit etre entre 0 et " + max + " : " );
+        while ( reponse < 3 || reponse > max ) {
+            System.out.print ( "*** Le montant doit etre entre 3 et " + max + " : " );
             reponse = Clavier.lireInt();
         }
         
@@ -343,10 +343,10 @@ public class Tp2 {
             
             // determiner si on continue ou pas
             
-            if ( montantJoueur > 0 ) {
+            if ( montantJoueur >= 6 ) {//MODIFICATION APPORTÉ pour que le solde ne puisse pas descendre en dessous de 6$
                 reponse = lireOuiNon ();
             } else {
-                System.out.println ( "Vous n'avez plus d'argent, vous ne pouvez continuer." );
+                System.out.println ( "Vous n'avez plus assez d'argent, vous ne pouvez continuer." );
                 reponse = 'n';
             }
 

@@ -1,3 +1,4 @@
+package Sim1;
 import java.util.*;   // pour pouvoir utiliser Random
 
 /**
