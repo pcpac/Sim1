@@ -41,6 +41,7 @@ public class Sim1_Tralala {
         return reponse;
     } // lireSortePari
     
+    //Amélioration apportée: pour avoir un solde de base superieur ou egal a 6$
     public static int lireMontantJoueur () {
     
         int reponse;
@@ -55,7 +56,8 @@ public class Sim1_Tralala {
         
         return reponse;
     } // lireMontantJoueur
-
+    
+    //Amelioration apportee: pour avoir une mise minimal de 3$
     public static int lireMiseJoueur ( int max ) {
     
         int reponse;
@@ -109,6 +111,65 @@ public class Sim1_Tralala {
     
     return (sorteCarte1 + sorteCarte2);
     } //la Somme de 2 cartes
+    
+    //Modification apportee:fonction pour éviter de complexifié la comprehension du main
+    //on sépare la verification de la victoire. Cela facilite l'ajout de nouveau 
+    //type de pari.
+    public static boolean verifierVictoire(int carte1, int carte2, int typePari){
+    /* antécédent : 0 <= carte1 <= 51, 0 <= carte2 <= 51, typePari est dans l'ensemble(1,2,3,4)
+     * conséquent : retourne vrai si le pari est gagne faux si il est perdu
+     */
+        boolean joueurGagne;
+        
+        switch(typePari){
+            case 1:
+                joueurGagne = estUnePaire ( carte1, carte2 );
+                break;
+            case 2:
+                joueurGagne = estUneSequence ( carte1, carte2 );
+                break;
+            case 3:
+                joueurGagne = sontMemeCouleur ( carte1, carte2 );
+                break;
+            case 4:
+                joueurGagne = sontInferieurA7 ( carte1, carte2 );
+                break;
+            default:
+                joueurGagne = false;
+                break;
+        }
+        return joueurGagne;
+    }
+    
+    //Modification apportee: fonction pour éviter de complexifié la comprehension du main
+    //on a sépare le calcul du gain. Cela facilite le calcul de gains pour
+    //des nouveaux type de pari.
+    public static int calculGain(int typePari, int mise, int somme2Cartes){
+    /* antécédent :typePari est dans l'ensemble(1,2,3,4), mise >= 3, somme2Cartes: la somme des cartes pigees selon le type de pari #4.
+     * conséquent : retourne le gain obtenu en fonction du type de parie, de la mise et des regles d'affaire.
+     */
+        int montantGagne;
+       
+        switch(typePari){
+            case 1:
+                montantGagne = 4 * mise;
+                break;
+            case 2:
+                montantGagne = 2 * mise;
+                break;
+            case 3:
+                montantGagne = mise;
+                break;
+            case 4:
+                montantGagne = mise * somme2Cartes;
+                break;
+            default:
+                montantGagne = 0;
+                break;
+        }
+        
+        return montantGagne;
+    }
     
     public static int laCouleur ( int carte ) {
         
@@ -222,14 +283,20 @@ public class Sim1_Tralala {
         
     } // afficherCarte
     
+
     public static void afficherLesDeuxCartes ( int carte1, int carte2 ) {
-                          
+        
+        FenetreCarteComplexe fenetre = FenetreCarteComplexe.getInstance();    
+        
         System.out.print ( "Voici la premiere carte : " );
         afficherCarte ( carte1 );
+        fenetre.setCarte1(chaineCouleur ( carte1 ) + laSorte ( carte1 ) );
         System.out.println ();
             
         System.out.print ( "Voici la deuxieme carte : " );
         afficherCarte ( carte2 );
+        fenetre.setCarte2(chaineCouleur ( carte2 ) + laSorte ( carte2 ) );
+        
         System.out.println ( '\n' );
 
         System.out.print ( "La somme des deux cartes est de : " + somme2Cartes(carte1,carte2));
@@ -253,6 +320,7 @@ public class Sim1_Tralala {
         
     } // initialiserJeuDeCarte
 
+    
     public static void main ( String[] parametres ) {
                 
         char    reponse;        // saisi : pour la reponse o ou n
@@ -267,9 +335,13 @@ public class Sim1_Tralala {
         
         boolean joueurGagne;    // si le joueur a gagne ou non la partie 
         
-        // Initialiser le procede aleatoire
+
         
+        // Initialiser le procede aleatoire
         initialiserJeuDeCarte ();
+        
+        //Initialisation de la fenetre affichant les cartes complexes
+        FenetreCarteComplexe fenetreCarte = FenetreCarteComplexe.getInstance();
                 
         // Saisir et valider le montant initial du joueur
         
@@ -283,6 +355,9 @@ public class Sim1_Tralala {
         
         while ( reponse == 'o' ) { 
             
+            //On retourne les 2 carte pour un autre pari
+            fenetreCarte.retourneCartes();
+            
             // saisie et validation du type de pari
             
             pari = lireSortePari ();
@@ -290,9 +365,8 @@ public class Sim1_Tralala {
             
             // saisie et validation du montant de la mise
             
-            //Nous passons montJoueur - 3 comme mise maximale car on prend en compte le coût de 3$ par pige
+            //Nous passons montantJoueur - 3 comme mise maximale car on prend en compte le coût de 3$ par pige
             mise = lireMiseJoueur ( montantJoueur - 3 );
-            System.out.println ();
             
             //On enleve le cout de 3$ par mise
             montantJoueur = montantJoueur - 3;
@@ -308,22 +382,15 @@ public class Sim1_Tralala {
             
             afficherLesDeuxCartes ( carte1, carte2 );
             
-            // determiner si le joueur a gagne ou perdu
+            //Modification apportee: Calcul de la somme des cartes pour le type de pari 4
+            int somme2Cartes = somme2Cartes(carte1, carte2);
             
-            joueurGagne = false;
+            //Modification apportee: On verifie la victoire dans une fonction auxiliaire
+            joueurGagne = verifierVictoire(carte1,carte2,pari);
             
-            if ( pari == 1 ) { // est-ce une paire ?
-                joueurGagne = estUnePaire ( carte1, carte2 );
-                montantGagne = 4 * mise;
-            } else if ( pari == 2 ) { // est-ce une sequence ?
-                joueurGagne = estUneSequence ( carte1, carte2 );
-                montantGagne = 2 * mise;
-            } else if(pari == 3) { // deux de la meme couleur ? MODIFICATION APPORTÉ POUR CLARIFIÉ LE CODE 
-                joueurGagne = sontMemeCouleur ( carte1, carte2 );
-                montantGagne = mise;
-            } else if(pari == 4) { // somme des cartes inférieur a 7 ?
-                joueurGagne = sontInferieurA7 ( carte1, carte2 );
-                montantGagne = mise * somme2Cartes(carte1, carte2);
+            //Modification apportee: On calcul le gain dans une fonction auxilaire
+            if(joueurGagne){
+                montantGagne = calculGain(pari,mise,somme2Cartes);
             }else{
                 montantGagne = 0;
             }
@@ -343,7 +410,7 @@ public class Sim1_Tralala {
             
             // determiner si on continue ou pas
             
-            if ( montantJoueur >= 6 ) {//MODIFICATION APPORTÉ pour que le solde ne puisse pas descendre en dessous de 6$
+            if ( montantJoueur >= 6 ) {//Amelioration apportee: pour que le solde ne puisse pas descendre en dessous de 6$
                 reponse = lireOuiNon ();
             } else {
                 System.out.println ( "Vous n'avez plus assez d'argent, vous ne pouvez continuer." );
@@ -352,6 +419,8 @@ public class Sim1_Tralala {
 
         } // boucle de jeu
         
+        //On ferme la fenetre
+        fenetreCarte.fermer();
         afficherFin ( montantJoueur );
         
     } // main
