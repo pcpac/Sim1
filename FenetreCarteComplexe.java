@@ -19,22 +19,29 @@ import javax.swing.JPanel;
 public class FenetreCarteComplexe extends JFrame {
 
  
-    /** Instance unique pré-initialisée */
+    // Instance unique pré-initialisée 
     private static FenetreCarteComplexe INSTANCE = new FenetreCarteComplexe();
- 
-    /** Point d'accès pour l'instance unique du singleton */
+    
+    
+    private JLabel carte1;
+    private JLabel carte2;
+    private JLabel message;
+    
+    // Point d'accès pour l'instance unique du singleton
     public static FenetreCarteComplexe getInstance()
     {	return INSTANCE;
     }
     
-    JLabel carte1;
-    JLabel carte2;
+
     
+    //Constructeur
     private FenetreCarteComplexe(){
+        
         this.setTitle("Affichage de vos cartes");
-        this.setSize(250,150);
+        this.setSize(250,170);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);             
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
+        this.setResizable(false);
         
         //On cree un tapis vert comme fond
         JPanel tapis = new JPanel();
@@ -52,19 +59,28 @@ public class FenetreCarteComplexe extends JFrame {
         panCarte2.setLayout(new BorderLayout());
         panCarte2.add(carte2);
         
+        //Somme
+        message = new JLabel("");
+        
         tapis.add(panCarte1);
         tapis.add(panCarte2);
+        tapis.add(message);
         
         this.setContentPane(tapis); 
         this.setVisible(true);
         
         
     }
+    
     public void setCarte1(String nouvelleCarte){
         this.carte1.setIcon(new ImageIcon("src/Sim1/images/"+nouvelleCarte+".png"));
     }
     public void setCarte2(String nouvelleCarte){
         this.carte2.setIcon(new ImageIcon("src/Sim1/images/"+nouvelleCarte+".png"));
+    }
+    
+    public void setMessage(String nouveauMessage){
+        this.message.setText(nouveauMessage);
     }
 
     public void retourneCartes(){
@@ -73,7 +89,7 @@ public class FenetreCarteComplexe extends JFrame {
     }
     
     public void fermer(){
-        this.setVisible(false); //you can't see me!
-        this.dispose(); //Destroy the JFrame object
+        this.setVisible(false);
+        this.dispose();
     }
 }

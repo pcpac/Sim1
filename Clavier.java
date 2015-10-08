@@ -195,10 +195,20 @@ public class Clavier {
      *              Le nombre peut commencer par - (negatif) mais ne
      *              peut commencer par +.
      */
-    
+
+    //Modification ajoutée: Ajout d'une exception pour la lecture des entier lorsque 
+    //la valeur rentrée n'est pas un entier.
+    while(true){
+
+       try{ 
         return Integer.parseInt( lireMot() );
-        
-    } // lireInt
+       }catch(NumberFormatException e){
+           System.out.print("Erreur veuillez rentrer un entier :");
+       } 
+       
+    }
+    
+   } // lireInt
 
     public static int lireIntLn() { 
     
