@@ -25,7 +25,9 @@ public class FenetreCarteComplexe extends JFrame {
     
     private JLabel carte1;
     private JLabel carte2;
-    private JLabel message;
+    private JLabel message1;
+    private JLabel message2;
+    private JLabel message3;
     
     // Point d'acces pour l'instance unique du singleton
     public static FenetreCarteComplexe getInstance()
@@ -38,7 +40,7 @@ public class FenetreCarteComplexe extends JFrame {
     private FenetreCarteComplexe(){
         
         this.setTitle("Affichage de vos cartes");
-        this.setSize(250,170);
+        this.setSize(350,170);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
         this.setResizable(false);
@@ -60,14 +62,18 @@ public class FenetreCarteComplexe extends JFrame {
         panCarte2.add(carte2);
         
         //Somme
-        message = new JLabel("");
+        message1 = new JLabel("");
+        message2 = new JLabel("");
+        message3 = new JLabel("");
         
         tapis.add(panCarte1);
         tapis.add(panCarte2);
-        tapis.add(message);
+        tapis.add(message1);
+        tapis.add(message2);
+        tapis.add(message3);
         
         this.setContentPane(tapis); 
-        this.setVisible(true);
+        this.setVisible(false);
         
         
     }
@@ -80,7 +86,15 @@ public class FenetreCarteComplexe extends JFrame {
     }
     
     public void setMessage(String nouveauMessage){
-        this.message.setText(nouveauMessage);
+        this.message1.setText(nouveauMessage);
+        this.message2.setText("");
+        this.message3.setText("");
+    }
+
+    public void setMessages(String message1, String message2, String message3){
+        this.message1.setText(message1);
+        this.message2.setText(message2);
+        this.message3.setText(message3);
     }
 
     public void retourneCartes(){

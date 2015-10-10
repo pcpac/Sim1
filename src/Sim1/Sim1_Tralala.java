@@ -296,7 +296,7 @@ public class Sim1_Tralala {
         } else if (type== 3) {
             reponse = "meme couleur";
         } else if (type== 4) {
-            reponse = "somme des deux cartes inferieur ou egale a 7";
+            reponse = "somme des deux cartes inferieure ou egale a 7";
         }else{
             reponse= "";
         }
@@ -315,17 +315,19 @@ public class Sim1_Tralala {
     } // afficherCarte
     
 
-    public static void afficherLesDeuxCartes ( int carte1, int carte2 ) {
+    public static void afficherLesDeuxCartes ( String msg1, String msg2, String msg3, int carte1, int carte2) {
         
         FenetreCarteComplexe fenetre = FenetreCarteComplexe.getInstance();    
 
         fenetre.setCarte1(chaineCouleur ( carte1 ) + laSorte ( carte1 ) );
 
         fenetre.setCarte2(chaineCouleur ( carte2 ) + laSorte ( carte2 ) );
-        
-        fenetre.setMessage("La somme des deux cartes est de : " + somme2Cartes(carte1,carte2));
 
-            
+        fenetre.setMessages(msg1, msg2, msg3);
+
+        fenetre.setVisible(true);
+        fenetre.toFront();
+
     } // afficherLesDeuxCartes
 
     public static void afficherFin ( int montant ) {
@@ -402,8 +404,6 @@ public class Sim1_Tralala {
             carte1 = deuxCartes / 100;
             carte2 = deuxCartes % 100;
             
-            afficherLesDeuxCartes ( carte1, carte2 );
-            
             //On enleve le cout de 3$ par mise
             montantJoueur = montantJoueur - 3;
             
@@ -427,16 +427,33 @@ public class Sim1_Tralala {
             
             System.out.println ();
             
-            if ( joueurGagne ) {
-                System.out.println ( "Bravo vous avez une "+chaineTypePari(pari)+"! Vous avez gagne " + montantGagne + " $" );
+            String str1, str2;
+        	if (pari == 4) {
+        		str1 = "     Voici les cartes: " + chaineSorte(carte1) + " + " + chaineSorte(carte2) + " = " + somme2Cartes + "      ";
+        	} 
+        	else {
+        		if ( joueurGagne ) {
+        			str1 = "Bravo vous avez une "+chaineTypePari(pari)+"!";
+        		} 
+        		else {
+        			str1 = "Desole vous n'avez pas de "+chaineTypePari(pari)+".";
+        		}
+        	}
+        		
+        	if ( joueurGagne ) {
+            	str2 = "Vous avez gagne " + montantGagne + " $";
                 montantJoueur = montantJoueur + montantGagne;
             } else {
-                System.out.println ( "Desole vous n'avez pas de "+chaineTypePari(pari)+" ! Vous avez perdu votre mise !" );
+            	str2 = "Vous avez perdu votre mise."; 
             }
+            System.out.println ( str1 + ' ' + str2);
+
+            String str3 = "Vous disposez maintenant de " + montantJoueur + " $";
+            System.out.println ();
+            System.out.println ( str3 );
+            System.out.println ();
             
-            System.out.println ();
-            System.out.println ( "Vous disposez maintenant de " + montantJoueur + " $" );
-            System.out.println ();
+            afficherLesDeuxCartes(str1, str2, str3, carte1, carte2);
             
             // determiner si on continue ou pas
             
