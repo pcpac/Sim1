@@ -40,7 +40,7 @@ public class FenetreCarteComplexe extends JFrame {
     private FenetreCarteComplexe(){
         
         this.setTitle("Affichage de vos cartes");
-        this.setSize(350,170);
+        this.setSize(400,170);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    
         this.setResizable(false);

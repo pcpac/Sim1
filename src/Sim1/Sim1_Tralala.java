@@ -283,6 +283,25 @@ public class Sim1_Tralala {
         return reponse;
     } // chaineCouleur
     
+    public static String chaineTypePariRetour ( int type ) {
+        
+        String reponse; 
+        
+        if (type == 1) {
+            reponse = "une paire";
+        } else if (type == 2) {
+            reponse = "une sequence";
+        } else if (type== 3) {
+            reponse = "des cartes de la meme couleur";
+        } else if (type== 4) {
+            reponse = "une somme inferieure ou egale a 7";
+        }else{
+            reponse= "";
+        }
+        
+        return reponse;
+    } // chaineTypePariRetour
+
     
     //Modification apportee
     public static String chaineTypePari ( int type ) {
@@ -296,7 +315,7 @@ public class Sim1_Tralala {
         } else if (type== 3) {
             reponse = "meme couleur";
         } else if (type== 4) {
-            reponse = "somme des deux cartes inferieure ou egale a 7";
+            reponse = "somme de deux cartes inferieure ou egale a 7";
         }else{
             reponse= "";
         }
@@ -433,10 +452,10 @@ public class Sim1_Tralala {
         	} 
         	else {
         		if ( joueurGagne ) {
-        			str1 = "Bravo vous avez une "+chaineTypePari(pari)+"!";
+        			str1 = "        Bravo vous avez "+chaineTypePariRetour(pari)+"!        ";
         		} 
         		else {
-        			str1 = "Desole vous n'avez pas de "+chaineTypePari(pari)+".";
+        			str1 = "Desole vous n'avez pas "+chaineTypePariRetour(pari)+".";
         		}
         	}
         		
@@ -447,11 +466,11 @@ public class Sim1_Tralala {
             	str2 = "Vous avez perdu votre mise."; 
             }
             System.out.println ( str1 + ' ' + str2);
-
             String str3 = "Vous disposez maintenant de " + montantJoueur + " $";
             System.out.println ();
             System.out.println ( str3 );
             System.out.println ();
+
             
             afficherLesDeuxCartes(str1, str2, str3, carte1, carte2);
             
