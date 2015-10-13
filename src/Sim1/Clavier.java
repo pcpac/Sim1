@@ -198,16 +198,18 @@ public class Clavier {
 
     //Modification ajoutee: Ajout d'une exception pour la lecture des entier lorsque 
     //la valeur rentree n'est pas un entier.
-    while(true){
-
+    boolean valid = false;
+    int value = 0;
+    while(valid == false){
        try{ 
-        return Integer.parseInt( lireMot() );
+    	   value = Integer.parseInt( lireMot() );
+        valid = true;
        }catch(NumberFormatException e){
-           System.out.print("Erreur veuillez rentrer un entier :");
+           System.out.print("Erreur. Veuillez entrer un entier :");
        } 
-       
     }
     
+    return value;
    } // lireInt
 
     public static int lireIntLn() { 
